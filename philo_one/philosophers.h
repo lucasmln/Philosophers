@@ -7,6 +7,12 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <stdbool.h>
+# include <semaphore.h>
+
+
+# include <string.h>
+# include <sys/wait.h>
+
 
 typedef struct	s_philo
 {

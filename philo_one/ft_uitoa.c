@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-static int			get_size(unsigned long n)
+static int			get_size(unsigned int n)
 {
 	unsigned int	size;
 
@@ -30,18 +30,13 @@ char				*ft_uitoa(unsigned int n)
 	char			*res;
 	int				size;
 	int				index;
-	unsigned long	nb;
+	unsigned int	nb;
 
-	if (n < 0)
-		nb = (unsigned long)-n;
-	else
-		nb = (unsigned long)n;
+	nb = (unsigned int)n;
 	size = get_size(nb);
 	index = 0;
-	if (!(res = (char *)malloc(sizeof(char) * size + 1 + (n < 0 ? 1 : 0))))
+	if (!(res = (char *)malloc(sizeof(char) * size + 1)))
 		return (NULL);
-	if (n < 0 && (res[index] = '-'))
-		size++;
 	index = size - 1;
 	while (nb >= 10)
 	{

@@ -44,6 +44,8 @@ int		main(int ac, char **av)
 		return (-1);
 	if (!(all = malloc(sizeof(t_all) * (data.nb_philo + 1))))
 		return (-1);
+	printf("nb = %d, death = %d, eat = %d, sleep = %d\n", data.nb_philo,
+data.time_death, data.time_eat, data.time_sleep);
 	philo_init(philo, &data);
 	philo_create(philo, &data, all);
 	philo_delete(philo, &data);
