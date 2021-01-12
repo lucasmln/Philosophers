@@ -17,21 +17,23 @@
 typedef struct	s_philo
 {
 	int				idx;
+	int				last_time_eat;
 	pthread_t		thread;
 	pthread_mutex_t	*f1;
 	pthread_mutex_t *f2;
+	pthread_mutex_t		*locker;
 }				t_philo;
 
 typedef struct  s_data
 {
 	pthread_mutex_t	*writer;
-//	pthread_mutex_t	*locker;
-	int		nb_philo;
-	int		time_death;
-	int		time_eat;
-	int		time_sleep;
-	int		round;
-	bool	die;
+	int					nb_philo;
+	int					time_death;
+	int					time_eat;
+	int					time_sleep;
+	int					round;
+	bool				die;
+	bool				all_meals;
 	struct timeval	time;
 }               t_data;
 
@@ -58,5 +60,7 @@ int					philo_create(t_philo *philo, t_data *data, t_all *all);
 int					ft_get_args(char **av, t_data *data);
 int					ft_parse(int ac, char **av, t_data *data);
 void				writer(t_all *all, const char *str);
-
+unsigned int		get_time(struct timeval start);
+int					check_death(t_all *all);
+void		output_die(t_all *all, const char *str);
 #endif

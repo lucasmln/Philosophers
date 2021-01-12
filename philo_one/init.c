@@ -3,20 +3,22 @@
 int		philo_init(t_philo *philo, t_data *data)
 {
 	int					i;
-//	pthread_mutex_t		*fork;
 
 	if (!(data->writer = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t))))
 		return (0);
 	pthread_mutex_init(data->writer, NULL);
-	i = 0;
-	while (i < data->nb_philo)
+	i = -1;
+	data->all_meals = false;
+	while (++i < data->nb_philo)
 	{
-		philo[i].idx = i + 1;
 		if (!(philo[i].f1 = malloc(sizeof(pthread_mutex_t))))
 			return (0);
-//		philo[i].f1 = &fork[i];
 		pthread_mutex_init(philo[i].f1, NULL);
-		i++;
+		if (!(philo[i].locker = malloc(sizeof(pthread_mutex_t))))
+			return (0);
+		pthread_mutex_init(philo[i].locker, NULL);
+		philo[i].idx = i + 1;
+		philo[i].last_time_eat = 0;
 	}
 	i = -1;
 	while (++i < data->nb_philo - 1)
@@ -27,7 +29,7 @@ int		philo_init(t_philo *philo, t_data *data)
 
 int		philo_create(t_philo *philo, t_data *data, t_all *all)
 {
-	int		i;
+	int			i;
 
 	i = -1;
 	gettimeofday(&data->time, NULL);
