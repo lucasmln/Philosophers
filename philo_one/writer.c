@@ -17,11 +17,11 @@ void		writer(t_all *all, const char *str)
 	char			*idx;
 	unsigned int	value;
 
+	pthread_mutex_lock(all->data->writer);
 	gettimeofday(&now, NULL);
 	value = get_time(all->data->time);
 	time = ft_uitoa(value);
 	idx = ft_uitoa((unsigned long)all->philo->idx);
-	pthread_mutex_lock(all->data->writer);
 	write(1, ".......", 7 - ft_strlen((const char *)time));
 	write(1, time, ft_strlen((const char*)time));
 	write(1, " ", 1);
@@ -41,11 +41,11 @@ void		output_die(t_all *all, const char *str)
 	char			*idx;
 	unsigned int	value;
 
+	pthread_mutex_lock(all->data->writer);
 	gettimeofday(&now, NULL);
 	value = get_time(all->data->time);
-	time = ft_uitoa(value);
+	time = ft_uitoa(all->philo->last_time_eat + all->data->time_death);
 	idx = ft_uitoa((unsigned long)all->philo->idx);
-	pthread_mutex_lock(all->data->writer);
 	write(1, ".......", 7 - ft_strlen((const char *)time));
 	write(1, time, ft_strlen((const char*)time));
 	write(1, " ", 1);

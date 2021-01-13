@@ -10,10 +10,7 @@ void	philo_delete(t_philo *philo, t_data *data)
 		pthread_mutex_unlock(philo[i].f1);
 	i = -1;
 	while (++i < data->nb_philo)
-	{
-		pthread_mutex_lock(philo[i].f1);
 		pthread_mutex_destroy(philo[i].f1);
-	}
 }
 
 int		check_philo_die(t_data *data)
@@ -21,7 +18,8 @@ int		check_philo_die(t_data *data)
 	while (data->die == false && data->all_meals == false)
 		usleep(1000);
 	usleep(1000);
-	pthread_mutex_lock(data->writer);
+	if (data->die == false)
+		pthread_mutex_lock(data->writer);
 	if (data->all_meals == true)
 		write(1, "all meals are ate\n", 18);
 	return (1);
@@ -32,7 +30,6 @@ int		main(int ac, char **av)
 	t_data		*data;
 	t_philo		*philo;
 	t_all		*all;
-	int			i;
 
 	if (!(data = (t_data *)malloc(sizeof(t_data))))
 		return (1);
@@ -45,10 +42,6 @@ int		main(int ac, char **av)
 	philo_init(philo, data);
 	philo_create(philo, data, all);
 	check_philo_die(data);
-	i = -1;
-//	while (++i < data->nb_philo)
-//		pthread_mutex_lock(philo[i].locker);
-
 	philo_delete(philo, data);
 	return (0);
 }

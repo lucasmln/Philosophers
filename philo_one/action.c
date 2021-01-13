@@ -2,8 +2,9 @@
 
 void	*routine(void *arg)
 {
-	t_all	*all;
-	int		i;
+	t_all		*all;
+	int			i;
+	pthread_t	check;
 
 	all = (t_all *)arg;
 	i = -1;
@@ -11,6 +12,8 @@ void	*routine(void *arg)
 	i = 0;
 	while (all->data->die == false && all->data->all_meals == false)
 	{
+		pthread_detach(check);
+		pthread_create(&check, NULL, &checker, all);
 		take_fork(all);
 		check_death(all);
 		eat(all);
@@ -25,6 +28,22 @@ void	*routine(void *arg)
 	}
 	i = -1;
 	pthread_mutex_unlock(all->philo->locker);
+	return (NULL);
+}
+
+void		*checker(void *arg)
+{
+	t_all			*all;
+	unsigned int	now;
+
+	all = (t_all *)arg;
+	usleep(all->data->time_death * 1000);
+	now = get_time(all->data->time);
+	if (now - all->philo->last_time_eat >= (unsigned int)all->data->time_death)
+	{
+		output_die(all, "is dead");
+		all->data->die = true;
+	}
 	return (NULL);
 }
 
@@ -52,8 +71,8 @@ int			take_fork(t_all *all)
 int			eat(t_all *all)
 {
 	writer(all, "is eating");
-	all->philo->last_time_eat = get_time(all->data->time);
 	usleep(all->data->time_eat * 1000);
+	all->philo->last_time_eat = get_time(all->data->time);
 	pthread_mutex_unlock(all->philo->f1);
 	pthread_mutex_unlock(all->philo->f2);
 	return (1);
