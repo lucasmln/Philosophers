@@ -61,7 +61,6 @@ int					ft_get_args(char **av, t_data *data);
 int					ft_parse(int ac, char **av, t_data *data);
 void				writer(t_all *all, const char *str);
 unsigned int		get_time(struct timeval start);
-int					check_death(t_all *all);
 void		output_die(t_all *all, const char *str);
 void		*checker(void *arg);
 

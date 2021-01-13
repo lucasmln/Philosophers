@@ -15,12 +15,9 @@ void	*routine(void *arg)
 		pthread_detach(check);
 		pthread_create(&check, NULL, &checker, all);
 		take_fork(all);
-		check_death(all);
 		eat(all);
-		check_death(all);
 		writer(all, "is sleeping");
 		usleep(all->data->time_sleep * 1000);
-		check_death(all);
 		writer(all, "is thinking");
 		i++;
 		if (all->data->round > 0 && i >= all->data->round)
@@ -47,22 +44,10 @@ void		*checker(void *arg)
 	return (NULL);
 }
 
-int			check_death(t_all *all)
-{
-	if (all->data->time_death <= (int)get_time(all->data->time) - all->philo->last_time_eat)
-	{
-		all->data->die = true;
-		output_die(all, "is die");
-		return (1);
-	}
-	return (0);
-}
-
 int			take_fork(t_all *all)
 {
 	pthread_mutex_lock(all->philo->f1);
 	pthread_mutex_lock(all->philo->f2);
-	check_death(all);
 	writer(all, "has taken a fork");
 	writer(all, "has taken a fork");
 	return (1);
