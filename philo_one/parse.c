@@ -1,4 +1,16 @@
-# include "./philosophers.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 18:00:15 by lmoulin           #+#    #+#             */
+/*   Updated: 2021/01/03 15:33:42 by lmoulin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "./philosophers.h"
 
 int		ft_error(const char *error)
 {
@@ -26,8 +38,8 @@ int		ft_get_args(char **av, t_data *data)
 	data->time_death = ft_atoi(av[2]);
 	data->time_eat = ft_atoi(av[3]);
 	data->time_sleep = ft_atoi(av[4]);
-	if (data->time_death < 50 || data->time_eat < 50 || data->time_sleep < 50)
-		return (ft_error("The value of timestamp need to be higher than 50ms\n"));
+	if (data->time_death < 30 || data->time_eat < 30 || data->time_sleep < 30)
+		return (ft_error("Value of timestamp need to be higher than 30ms\n"));
 	return (1);
 }
 
@@ -46,5 +58,3 @@ int		ft_parse(int ac, char **av, t_data *data)
 		data->round = -1;
 	return (1);
 }
-
-

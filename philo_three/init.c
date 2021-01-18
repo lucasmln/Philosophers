@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 12:26:29 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/10/15 14:11:13 by lmoulin          ###   ########.fr       */
+/*   Created: 2021/01/07 12:26:29 by lmoulin           #+#    #+#             */
+/*   Updated: 2021/01/15 14:11:13 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,30 @@ int		philo_init(t_philo *philo, t_data *data)
 	return (1);
 }
 
+int		philo_wait(t_data *data, t_all *all)
+{
+	int		i;
+	int		status;
+
+	i = -1;
+	while (++i < data->nb_philo)
+	{
+		waitpid(all[i].philo->pid, &status, WNOHANG);
+		status /= 256;
+		if (status == 1)
+			data->die = true;
+		if (status == 2)
+			data->all_meals = true;
+		if (status == 1 || status == 2)
+			break ;
+		if (i + 1 == data->nb_philo)
+			i = -1;
+	}
+	if (data->die == false)
+		data->all_meals = true;
+	return (1);
+}
+
 int		philo_create(t_philo *philo, t_data *data, t_all *all)
 {
 	int			i;
@@ -45,9 +69,14 @@ int		philo_create(t_philo *philo, t_data *data, t_all *all)
 	{
 		all[i].philo = &philo[i];
 		all[i].data = data;
-		if (pthread_create(&philo[i].thread, NULL, &routine, &all[i]))
-			return (0);
-		usleep(50);
+		all[i].philo->pid = fork();
+		if (all[i].philo->pid == 0)
+		{
+			routine(&all[i]);
+			exit(all[i].data->die);
+		}
+		usleep(30);
 	}
+	philo_wait(data, all);
 	return (1);
 }

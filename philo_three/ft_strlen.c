@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/03 18:00:15 by lmoulin           #+#    #+#             */
-/*   Updated: 2021/01/03 15:33:42 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/10/07 10:53:56 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/10/21 15:21:49 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-void		ft_strdel(char **s)
+size_t		ft_strlen(const char *s)
 {
-	if (s != NULL)
-	{
-		free(*s);
-		*s = NULL;
-	}
+	size_t len;
+
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
 }

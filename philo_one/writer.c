@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   writer.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 18:00:15 by lmoulin           #+#    #+#             */
+/*   Updated: 2021/01/03 15:33:42 by lmoulin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./philosophers.h"
 
 unsigned int	get_time(struct timeval start)
@@ -10,7 +22,7 @@ unsigned int	get_time(struct timeval start)
 			- start.tv_usec) / 1000);
 }
 
-void		writer(t_all *all, const char *str)
+void			writer(t_all *all, const char *str)
 {
 	struct timeval	now;
 	char			*time;
@@ -34,7 +46,7 @@ void		writer(t_all *all, const char *str)
 	ft_strdel(&time);
 }
 
-void		output_die(t_all *all, const char *str)
+void			output_die(t_all *all, const char *str)
 {
 	struct timeval	now;
 	char			*time;

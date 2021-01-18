@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/03 18:00:15 by lmoulin           #+#    #+#             */
-/*   Updated: 2021/01/03 15:33:42 by lmoulin          ###   ########.fr       */
+/*   Created: 2021/01/07 12:26:29 by lmoulin           #+#    #+#             */
+/*   Updated: 2021/01/15 14:11:13 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,24 @@ void	philo_delete(t_philo *philo, t_data *data)
 	i = -1;
 	usleep(1000);
 	while (++i < data->nb_philo)
-		pthread_mutex_unlock(philo[i].f1);
-	i = -1;
-	while (++i < data->nb_philo)
-		pthread_mutex_destroy(philo[i].f1);
+		pthread_detach(philo[i].thread);
 }
 
 int		check_philo_die(t_data *data)
 {
+	char		*time;
+
 	while (data->die == false && data->all_meals == false)
 		usleep(1000);
 	usleep(1000);
-	if (data->die == false)
-		pthread_mutex_lock(data->writer);
 	if (data->all_meals == true)
-		write(1, "all meals are ate\n", 18);
+	{
+		sem_wait(data->writer);
+		time = ft_uitoa(get_time(data->time));
+		write(1, ".......", 7 - ft_strlen(time));
+		printf("%u all meals are ate\n", get_time(data->time));
+		ft_strdel(&time);
+	}
 	return (1);
 }
 

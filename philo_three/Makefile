@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lmoulin <lmoulinn@student.42.fr>           +#+  +:+       +#+         #
+#    By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/22 19:33:23 by lmoulin           #+#    #+#              #
 #    Updated: 2020/11/25 19:28:14 by lmoulin          ###   ########.fr        #
@@ -16,7 +16,7 @@ ifeq ($(UNAME), Linux)
 	CFLAGS += -pthread
 endif
 
-NAME = philo_two
+NAME = philo_three
 
 SRCS = 		action.c \
 		ft_atoi.c \

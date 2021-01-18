@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/07 12:26:29 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/10/15 14:11:13 by lmoulin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./philosophers.h"
 
 void	philo_delete(t_philo *philo, t_data *data)
@@ -46,7 +58,5 @@ int		main(int ac, char **av)
 	philo_create(philo, data, all);
 	check_philo_die(data);
 	philo_delete(philo, data);
-	while (1)
-	;
 	return (0);
 }

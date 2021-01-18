@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 12:26:29 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/10/15 14:11:13 by lmoulin          ###   ########.fr       */
+/*   Created: 2021/01/07 12:26:29 by lmoulin           #+#    #+#             */
+/*   Updated: 2021/01/15 14:11:13 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philosophers.h"
 
-void		*routine(void *arg)
+int			routine(void *arg)
 {
 	t_all		*all;
 	int			i;
@@ -33,7 +33,11 @@ void		*routine(void *arg)
 		if (all->data->round > 0 && i >= all->data->round)
 			all->data->all_meals = true;
 	}
-	return (NULL);
+	if (all->data->die == true)
+		exit(1);
+	if (all->data->all_meals == true)
+		exit(2);
+	return (all->data->die);
 }
 
 void		*checker(void *arg)
@@ -46,8 +50,9 @@ void		*checker(void *arg)
 	now = get_time(all->data->time);
 	if (now - all->philo->last_time_eat >= (unsigned int)all->data->time_death)
 	{
-		output_die(all, "is dead");
 		all->data->die = true;
+		output_die(all, "is dead");
+		exit(1);
 	}
 	return (NULL);
 }
