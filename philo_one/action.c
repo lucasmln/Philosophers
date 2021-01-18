@@ -50,8 +50,8 @@ void		*checker(void *arg)
 	now = get_time(all->data->time);
 	if (now - all->philo->last_time_eat >= (unsigned int)all->data->time_death)
 	{
-		output_die(all, "is dead");
 		all->data->die = true;
+		output_die(all, "is dead");
 	}
 	return (NULL);
 }
@@ -68,8 +68,8 @@ int			take_fork(t_all *all)
 int			eat(t_all *all)
 {
 	writer(all, "is eating");
-	usleep(all->data->time_eat * 1000);
 	all->philo->last_time_eat = get_time(all->data->time);
+	usleep(all->data->time_eat * 1000);
 	pthread_mutex_unlock(all->philo->f1);
 	pthread_mutex_unlock(all->philo->f2);
 	return (1);
