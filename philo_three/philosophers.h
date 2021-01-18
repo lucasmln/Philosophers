@@ -68,7 +68,7 @@ int					ft_get_args(char **av, t_data *data);
 int					ft_parse(int ac, char **av, t_data *data);
 void				writer(t_all *all, const char *str);
 int					check_philo_die(t_data *data);
-void				philo_delete(t_philo *philo, t_data *data);
+void				philo_delete(t_philo *philo, t_data *data, t_all *all);
 unsigned int		get_time(struct timeval start);
 void				output_die(t_all *all, const char *str);
 void				*checker(void *arg);
