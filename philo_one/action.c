@@ -24,7 +24,6 @@ void		*routine(void *arg)
 	i = 0;
 	while (all->data->die == false && all->data->all_meals == false)
 	{
-		pthread_detach(check);
 		pthread_create(&check, NULL, &checker, all);
 		take_fork(all);
 		eat(all);
@@ -32,9 +31,11 @@ void		*routine(void *arg)
 		usleep(all->data->time_sleep * 1000);
 		writer(all, "is thinking");
 		i++;
+		pthread_detach(check);
 		if (all->data->round > 0 && i >= all->data->round)
 			all->data->all_meals = true;
 	}
+	pthread_detach(check);
 	i = -1;
 	pthread_mutex_unlock(all->philo->locker);
 	return (NULL);

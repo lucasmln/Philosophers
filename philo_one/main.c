@@ -12,17 +12,22 @@
 
 #include "./philosophers.h"
 
-void	philo_delete(t_philo *philo, t_data *data)
+void	philo_delete(t_philo *philo, t_data *data, t_all *all)
 {
 	int		i;
 
 	i = -1;
 	usleep(1000);
+	pthread_mutex_destroy(data->writer);
+	free(data->writer);
 	while (++i < data->nb_philo)
-		pthread_mutex_unlock(philo[i].f1);
+		free(philo[i].f1);
 	i = -1;
 	while (++i < data->nb_philo)
-		pthread_mutex_destroy(philo[i].f1);
+		free(philo[i].locker);
+	free(all->philo);
+	free(all->data);
+	free(all);
 }
 
 int		check_philo_die(t_data *data)
@@ -54,6 +59,6 @@ int		main(int ac, char **av)
 	philo_init(philo, data);
 	philo_create(philo, data, all);
 	check_philo_die(data);
-	philo_delete(philo, data);
+	philo_delete(philo, data, all);
 	return (0);
 }
