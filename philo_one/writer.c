@@ -51,11 +51,9 @@ void			output_die(t_all *all, const char *str)
 	struct timeval	now;
 	char			*time;
 	char			*idx;
-	unsigned int	value;
 
 	pthread_mutex_lock(all->data->writer);
 	gettimeofday(&now, NULL);
-	value = get_time(all->data->time);
 	time = ft_uitoa(all->philo->last_time_eat + all->data->time_death);
 	idx = ft_uitoa((unsigned long)all->philo->idx);
 	write(1, ".......", 7 - ft_strlen((const char *)time));

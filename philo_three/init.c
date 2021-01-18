@@ -40,6 +40,8 @@ int		philo_wait(t_data *data, t_all *all)
 	int		status;
 
 	i = -1;
+	write(1, "aaa\n", 4);
+	usleep(1000);
 	while (++i < data->nb_philo)
 	{
 		waitpid(all[i].philo->pid, &status, WNOHANG);
