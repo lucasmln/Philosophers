@@ -19,7 +19,7 @@ void	philo_delete(t_philo *philo, t_data *data, t_all *all)
 	i = -1;
 	usleep(1000);
 	while (++i < data->nb_philo)
-		pthread_detach(philo[i].thread);
+		kill(philo[i].pid, SIGKILL);
 	free(all->data);
 	free(all->philo);
 	free(all);
